@@ -23,14 +23,14 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const initAuth = async () => {
-      console.log("Starting auth initialization");
       try {
         await checkUser();
       } catch (error) {
         console.error("Auth initialization error:", error);
+        setUser(null); // Ensure user is set to null if there's an error
+      } finally {
         setLoading(false);
       }
-      console.log("Auth initialization complete");
     };
 
     initAuth();
@@ -42,9 +42,7 @@ export function AuthProvider({ children }) {
       setUser(currentUser);
     } catch (error) {
       console.error("Check user error:", error);
-      setUser(null);
-    } finally {
-      setLoading(false);
+      setUser(null); // Ensure user is set to null if not authenticated
     }
   };
 
